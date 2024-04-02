@@ -1,26 +1,36 @@
-import React, { useState } from 'react'
+import { useState } from "react";
 
-const AddTaskForm = ({ addTask }) => {
-  const [text, setText] = useState('')
+function AddTaskForm ({ addTask }) {
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!text.trim()) return
-    addTask(text)
-    setText('')
-  }
+    const [text, setText] = useState('')
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Escribe una nueva tarea..."
-      />
-      <button type="submit">Agregar tarea</button>
-    </form>
-  )
+    //Maneja el evento para que no se recarge la página
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        //Quitamos los espacios a los llaos con trim
+        if(!text.trim()) return;
+
+        addTask(text)
+        setText('')
+    }
+
+    return (
+        <>
+        <form onSubmit={handleSubmit}>
+
+            <input
+            type="text"
+            placeholder="Añadir nueva tarea"
+            value={text}
+            onChange={(e) => setText(e.target.value)}/>
+
+
+            <button type="submit">Añadir</button>
+
+        </form>
+        </>
+    )
 }
 
 export default AddTaskForm

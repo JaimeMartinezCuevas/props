@@ -1,12 +1,18 @@
-import React from 'react'
+function Task ({task, deleteTask, toggleTask}) {
+    return(
+        <>
+            <li>
 
-const Task = ({ task, onDelete, onToggleCompletion }) => {
-  return (
-    <li style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-      <span onClick={onToggleCompletion}>{task.text}</span>
-      <button onClick={onDelete}>Eliminar</button>
-    </li>
-  )
+            <div 
+            style={{ textDecoration: task.completed ? 'line-through' : 'none', cursor: 'pointer' }}
+            onClick={() => toggleTask(task.id)}>
+                {task.text}
+            </div>
+
+            <button type="button" onClick={() => deleteTask(task.id)}>Eliminar</button>
+            </li>
+        </>
+    )
 }
 
 export default Task

@@ -1,48 +1,44 @@
-import React, { useState } from 'react'
-import Task from './Task'
-import AddTaskForm from './AddTaskForm'
+import { useState } from 'react'
+import './App.css'
+import Task from './components/Task.jsx'
+import AddTaskForm from './components/AddTaskForm.jsx'
 
 const App = () => {
-  const [tasks, setTasks] = useState([
+
+  const[tasks, setTasks] = useState ([
     { id: 1, text: 'Hacer la compra', completed: false },
     { id: 2, text: 'Llamar al médico', completed: true },
-    { id: 3, text: 'Hacer ejercicio', completed: false }
+    { id: 3, text: 'Hacer ejercicio', completed: false },
   ])
 
   const addTask = (text) => {
-    const newTask = {
-      id: tasks.length + 1,
-      text,
-      completed: false
-    }
-    setTasks([...tasks, newTask]);
+
+    //Plantilla de tarea
+    const newTask = {id: text + tasks.length +1, text, completed: false}
+
+    //Spread operator para añadila a la lista
+    setTasks([...tasks, newTask])
   }
 
-  const deleteTask = (taskId) => {
-    setTasks(tasks.filter(task => task.id !== taskId))
+  //Función para borrar la tarea
+  const deleteTask = (deleteID) => {
+    setTasks(tasks.filter(task => task.id !== deleteID))
   }
 
-  const toggleTaskCompletion = (taskId) => {
-    setTasks(tasks.map(task => {
-      if (task.id === taskId) {
-        return { ...task, completed: !task.completed }
-      }
-      return task
-    }))
+  //Toggle para tachar la tarea (true/false)
+  const toggleTask = (taskID) => {
+    setTasks(tasks.map(task => task.id === taskID ? {...task, completed: !task.completed} : task))
   }
 
   return (
     <>
-      <h1>Lista de Tareas</h1>
-      <AddTaskForm addTask={addTask} />
+      <h1>Lista de tareas</h1>
+
+      <AddTaskForm addTask={addTask}/>
+      
       <ul>
-        {tasks.map(task => (
-          <Task
-            key={task.id}
-            task={task}
-            onDelete={() => deleteTask(task.id)}
-            onToggleCompletion={() => toggleTaskCompletion(task.id)}
-          />
+        {tasks.map(task =>(
+        <Task task={task} key={task.id} deleteTask={deleteTask} toggleTask={toggleTask} />
         ))}
       </ul>
     </>
